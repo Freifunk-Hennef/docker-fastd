@@ -1,0 +1,26 @@
+bind any:${FASTD_PORT-10000};
+secret "${FASTD_SECRET}";
+log level ${FASTD_LOGLEVEL-info};
+mode ${FASTD_MODE-tap};
+method "salsa2012+umac";
+peer limit ${FASTD_PEER_LIMIT-128};
+hide ip addresses yes;
+mtu ${FASTD_MTU-1406};
+secure handshakes yes;
+status socket "/tmp/fastd00.sock";
+user "nobody";
+drop capabilities yes;
+forward no;
+hide mac addresses yes;
+on up "
+/usr/local/sbin/batctl if add $INTERFACE
+/sbin/ip link set up $INTERFACE
+";
+
+on down "
+/usr/local/sbin/batctl if del $INTERFACE
+";
+
+on verify "
+  true
+";
