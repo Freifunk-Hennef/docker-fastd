@@ -3,6 +3,12 @@ FROM ffhef/debian-batman:8.3-2017.0
 ENV PACKAGES="libcap2 libcap-dev bison pkg-config libsodium13 libsodium-dev cmake libssl1.0.0 libssl-dev git build-essential libjson-c2 libjson-c-dev bridge-utils"
 ENV REMOVE_PACKAGES="libcap-dev bison pkg-config libsodium-dev cmake libssl-dev git build-essential libjson-c-dev"
 
+ENV FASTD_PORT=10000
+ENV FASTD_LOGLEVEL=info
+ENV FASTD_MODE=tap
+ENV FASTD_PEER_LIMIT=128
+ENV FASTD_MTU_1406
+
 RUN apt-get update && \
     apt-get install -y $PACKAGES && \
     cd /usr/src && \
