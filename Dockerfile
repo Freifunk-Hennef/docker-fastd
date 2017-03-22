@@ -31,6 +31,7 @@ RUN apt-get update && \
 EXPOSE 10000/udp
 
 ADD /entrypoint.sh /
+ADD /fastd.conf.in /etc/fastd.conf.in
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "--config", "/etc/fastd/fastd.conf" ]
