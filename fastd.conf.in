@@ -1,4 +1,4 @@
-bind any:${FASTD_PORT};
+bind ${FASTD_BIND_ADDRESS}:${FASTD_PORT};
 secret "${FASTD_SECRET}";
 log level ${FASTD_LOGLEVEL};
 mode ${FASTD_MODE};
@@ -14,6 +14,10 @@ forward no;
 hide mac addresses yes;
 on up "
 /usr/local/sbin/batctl if add ${DOLLAR}INTERFACE
+if [ -n \"${DOLLAR}FASTD_INTERFACE_MAC\" ]
+then
+  /sbin/ip link set ${DOLLAR}INTERFACE address $FASTD_INTERFACE_MAC
+fi
 /sbin/ip link set up ${DOLLAR}INTERFACE
 ";
 
